@@ -1,1 +1,1 @@
- 
+Index finger of right-hand system"

@@ -12,27 +12,23 @@ mpDraw = mp.solutions.drawing_utils
 
 
 axis = np.zeros((21, 2))
-#print(arr)
+#print(axis)
 while True:
     finger = []
     success, img = cap.read()
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = hands.process(imgRGB)
     #print(results.multi_hand_landmarks)
-    
     if results.multi_hand_landmarks:
         for handRms in results.multi_hand_landmarks:
             for id, lm in enumerate(handRms.landmark):
                 h, w, c = img.shape
                 cx, cy = int(lm.x*w), int(lm.y*h)
                 axis[id] = [cx, cy] # [ 0, 1 ]
-                #print(id , arr[id])
-                #print(arr[12, 1], arr[11, 1])
+                #print(id , axis[id])
             if axis[4, 0] > axis[3, 0]:
-                #Nfing = 1
                 finger.append("Thumbs")
             if axis[8, 1] < axis[7, 1]:
-                #Nfing = 1
                 finger.append("Index")
             if axis[12, 1] < axis[11, 1]:
                 finger.append("Middle")
@@ -40,10 +36,6 @@ while True:
                 finger.append("Ring")
             if axis[20, 1] < axis[19, 1]:
                 finger.append("Pinky")
-            # if cx[4] > cx[3]:
-            #     Nfing = 4
-            # else:
-            #     Nfing = 5
 
             mpDraw.draw_landmarks(img, handRms, mpHands.HAND_CONNECTIONS)
     Nfing = len(finger)
